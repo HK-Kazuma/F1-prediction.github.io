@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F1順位予想アプリ — アイデアハンドオーバー</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E8293A;
+    --red-dark: #B01F2C;
+    --black: #0D0D0D;
+    --gray-900: #1A1A1A;
+    --gray-800: #242424;
+    --gray-700: #333;
+    --gray-400: #888;
+    --gray-200: #CCC;
+    --gray-100: #F0F0F0;
+    --white: #FAFAFA;
+    --purple: #7F77DD;
+    --teal: #1D9E75;
+    --amber: #EF9F27;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--gray-700);
+    padding: 48px 64px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+  }
+  .header-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    letter-spacing: .03em;
+    line-height: 1;
+    color: var(--white);
+  }
+  header h1 span { color: var(--red); }
+  .header-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+    line-height: 1.9;
+  }
+
+  /* LAYOUT */
+  main { padding: 0 64px 80px; max-width: 1100px; margin: 0 auto; }
+
+  section { padding: 56px 0 0; }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: .05em;
+    color: var(--white);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  h2::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 28px;
+    background: var(--red);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 10px;
+  }
+
+  p { color: var(--gray-200); margin-bottom: 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* SOURCE CARD */
+  .source-card {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-left: 3px solid var(--red);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .source-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .source-card a {
+    color: var(--gray-200);
+    text-decoration: none;
+    font-size: 13px;
+    word-break: break-all;
+  }
+  .source-card a:hover { color: var(--white); }
+  .source-card .desc { font-size: 13px; color: var(--gray-400); margin-top: 6px; }
+
+  /* IDEA CARDS */
+  .idea-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .idea-card {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .idea-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .idea-card.c1::before { background: var(--purple); }
+  .idea-card.c2::before { background: var(--teal); }
+  .idea-card.c3::before { background: var(--amber); }
+
+  .idea-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: .12;
+    position: absolute;
+    top: 16px; right: 20px;
+  }
+  .c1 .idea-num { color: var(--purple); }
+  .c2 .idea-num { color: var(--teal); }
+  .c3 .idea-num { color: var(--amber); }
+
+  .idea-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .c1 .idea-badge { background: rgba(127,119,221,.15); color: var(--purple); }
+  .c2 .idea-badge { background: rgba(29,158,117,.15); color: var(--teal); }
+  .c3 .idea-badge { background: rgba(239,159,39,.15); color: var(--amber); }
+
+  .idea-card h4 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .idea-card p { font-size: 13px; color: var(--gray-400); margin-bottom: 14px; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--gray-800);
+    color: var(--gray-400);
+    border: 1px solid var(--gray-700);
+  }
+
+  .output-label {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--gray-700);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-400);
+  }
+  .output-label span {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .c1 .output-label span { color: var(--purple); }
+  .c2 .output-label span { color: var(--teal); }
+  .c3 .output-label span { color: var(--amber); }
+
+  /* LAYER DIAGRAM */
+  .layer-stack { display: flex; flex-direction: column; gap: 0; }
+  .layer-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border: 1px solid var(--gray-700);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .layer-item:first-child { border-radius: 10px 10px 0 0; }
+  .layer-item:last-child { border-radius: 0 0 10px 10px; }
+  .layer-item + .layer-item { border-top: none; }
+  .layer-left {
+    padding: 20px 22px;
+    background: var(--gray-900);
+    border-right: 1px solid var(--gray-700);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .layer-left .lnum {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    line-height: 1;
+  }
+  .layer-left .lname {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-400);
+    margin-top: 4px;
+  }
+  .layer-right {
+    padding: 20px 24px;
+    background: var(--gray-800);
+  }
+  .layer-right .lr-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .layer-right p { font-size: 13px; color: var(--gray-400); margin-bottom: 0; }
+
+  /* FEATURES TABLE */
+  .feat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .feat-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-700);
+    background: var(--gray-900);
+  }
+  .feat-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    color: var(--gray-200);
+    vertical-align: top;
+  }
+  .feat-table tr:last-child td { border-bottom: none; }
+  .feat-table tr:hover td { background: rgba(255,255,255,.02); }
+  .feat-table .cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    white-space: nowrap;
+  }
+
+  /* BAR CHART */
+  .bar-section { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .bar-card {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 10px;
+    padding: 20px 20px;
+  }
+  .bar-card-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .c1t { color: var(--purple); }
+  .c2t { color: var(--teal); }
+  .c3t { color: var(--amber); }
+
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .bar-key { font-size: 11px; color: var(--gray-400); min-width: 76px; }
+  .bar-track { flex: 1; height: 5px; background: var(--gray-700); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .bar-val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-400); min-width: 24px; text-align: right; }
+
+  /* INSIGHT BLOCKS */
+  .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .insight-block {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .insight-block .scenario {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gray-700);
+  }
+  .insight-block p { font-size: 12px; color: var(--gray-400); }
+
+  /* CODE BLOCK */
+  pre {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 8px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--gray-200);
+    margin: 16px 0;
+  }
+  pre .comment { color: #555; }
+  pre .key { color: var(--teal); }
+  pre .str { color: var(--amber); }
+  pre .fn { color: var(--purple); }
+
+  /* ALEX BANKS COMPARE */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--gray-700); border-radius: 10px; overflow: hidden; }
+  .compare-col { padding: 24px; }
+  .compare-col:first-child { border-right: 1px solid var(--gray-700); }
+  .compare-col .col-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-700);
+  }
+  .compare-col.them .col-title { color: var(--gray-400); }
+  .compare-col.us .col-title { color: var(--red); }
+  .cmp-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+  .cmp-row .ck { font-size: 11px; color: var(--gray-400); min-width: 90px; }
+  .cmp-row .cv { font-size: 12px; color: var(--gray-200); }
+  .diff { color: var(--teal) !important; }
+
+  /* ROADMAP */
+  .roadmap { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border: 1px solid var(--gray-700); border-radius: 10px; overflow: hidden; }
+  .roadmap-phase { padding: 24px; }
+  .roadmap-phase + .roadmap-phase { border-left: 1px solid var(--gray-700); }
+  .phase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .phase-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 12px; }
+  .phase-items { list-style: none; }
+  .phase-items li {
+    font-size: 12px;
+    color: var(--gray-400);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    display: flex;
+    gap: 8px;
+  }
+  .phase-items li::before { content: '—'; color: var(--gray-700); flex-shrink: 0; }
+  .phase-items li:last-child { border-bottom: none; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--gray-800); margin: 48px 0 0; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 64px;
+    border-top: 1px solid var(--gray-700);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+  footer span { color: var(--red); }
+
+  @media (max-width: 768px) {
+    header, main, footer { padding-left: 24px; padding-right: 24px; }
+    .idea-grid, .bar-section, .insight-grid, .roadmap { grid-template-columns: 1fr; }
+    .roadmap-phase + .roadmap-phase { border-left: none; border-top: 1px solid var(--gray-700); }
+    .compare-grid { grid-template-columns: 1fr; }
+    .compare-col:first-child { border-right: none; border-bottom: 1px solid var(--gray-700); }
+    .layer-item { grid-template-columns: 1fr; }
+    .layer-left { border-right: none; border-bottom: 1px solid var(--gray-700); }
+    header { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-eyebrow">Project Handover Document</div>
+    <h1>F1 RACE<br><span>PREDICTION</span><br>APP</h1>
+  </div>
+  <div class="header-meta">
+    作成日<br>2026.05.27<br><br>
+    ステータス<br>アイデア整理完了<br><br>
+    次フェーズ<br>MVP実装
+  </div>
+</header>
+
+<main>
+
+  <!-- ① きっかけ -->
+  <section>
+    <h2>背景と参考リポジトリ</h2>
+    <div class="source-card">
+      <div class="label">参考リポジトリ</div>
+      <a href="https://github.com/ryoma193tclt/f1-regulation-compare-chatbot">github.com/ryoma193tclt/f1-regulation-compare-chatbot</a>
+      <div class="desc">FIA 2025/2026 テクニカルレギュレーションを比較・解説するRAGチャットボット。LightRAG + LangGraph + FastAPI + Streamlit 構成。本プロジェクトの技術的出発点。</div>
+    </div>
+    <p>このリポジトリのLightRAG資産（PDF解析・ハイブリッド検索）をそのまま流用することで、レギュレーション情報をF1順位予測に組み込むというアイデアに発展した。</p>
+  </section>
+
+  <!-- ② 3つのアイデア -->
+  <section>
+    <h2>3つのアイデア</h2>
+    <div class="idea-grid">
+
+      <div class="idea-card c1">
+        <div class="idea-num">1</div>
+        <div class="idea-badge">Idea 01</div>
+        <h4>データ分析ベース<br>ML順位予測</h4>
+        <p>FastF1 / OpenF1 で走行データを取得し、XGBoost でレース毎の1〜20位を出力する最小構成。予選順位・タイム・天候・サーキット特性を特徴量として使用。</p>
+        <div class="tag-row">
+          <span class="tag">FastF1</span>
+          <span class="tag">OpenF1</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">scikit-learn</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Streamlit</span>
+        </div>
+        <div class="output-label">OUTPUT<span>レース毎の予測順位（1〜20位）</span></div>
+      </div>
+
+      <div class="idea-card c2">
+        <div class="idea-num">2</div>
+        <div class="idea-badge">Idea 02</div>
+        <h4>レギュレーション有利度スコア統合</h4>
+        <p>FIA規則PDFをLightRAG + LLMで解析。規定タイプを分類し、チームDNA×規定の相性スコアをアイデア1の特徴量に追加。規定変更年の開幕前でも有利チームを推定可能。</p>
+        <div class="tag-row">
+          <span class="tag">LightRAG</span>
+          <span class="tag">LangGraph</span>
+          <span class="tag">LLM</span>
+          <span class="tag">規定タイプ分類</span>
+          <span class="tag">チームDNA</span>
+          <span class="tag">PDF解析</span>
+        </div>
+        <div class="output-label">OUTPUT<span>規定×チーム有利度スコア → アイデア1の特徴量へ</span></div>
+      </div>
+
+      <div class="idea-card c3">
+        <div class="idea-num">3</div>
+        <div class="idea-badge">Idea 03</div>
+        <h4>ベイズ更新 / モンテカルロ<br>チャンピオンシップ予測</h4>
+        <p>レースが終わるたびにベイズ更新でモデルを修正し、残りシーズンをモンテカルロで1000回シミュレーション。アイデア2のスコアを事前確率として使用。</p>
+        <div class="tag-row">
+          <span class="tag">ベイズ更新</span>
+          <span class="tag">Monte Carlo</span>
+          <span class="tag">partial_fit</span>
+          <span class="tag">確率分布</span>
+        </div>
+        <div class="output-label">OUTPUT<span>チャンピオンシップ確率の動的更新</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ③ レイヤー構造 -->
+  <section>
+    <h2>レイヤー構造</h2>
+    <p style="margin-bottom:20px;">3つは独立したシステムではなく、1→2→3の順で積み重なるパイプラインとして設計する。</p>
+    <div class="layer-stack">
+      <div class="layer-item">
+        <div class="layer-left">
+          <div class="lnum" style="color:var(--amber)">03</div>
+          <div class="lname">チャンピオン予測</div>
+        </div>
+        <div class="layer-right">
+          <div class="lr-title">ベイズ更新 + モンテカルロ</div>
+          <p>アイデア2のスコアを事前確率として初期化。レース結果が出るたびに更新し、残りシーズンの確率分布を可視化。シーズン後半ほど精度が上がる。</p>
+        </div>
+      </div>
+      <div class="layer-item">
+        <div class="layer-left">
+          <div class="lnum" style="color:var(--teal)">02</div>
+          <div class="lname">定性→定量変換</div>
+        </div>
+        <div class="layer-right">
+          <div class="lr-title">LightRAG + LLM スコアリング</div>
+          <p>FIA規則PDFを解析して規定タイプを分類し、過去の同タイプ年でのチーム成績と紐付けてスコア化。アイデア1に特徴量として渡す前処理レイヤー。</p>
+        </div>
+      </div>
+      <div class="layer-item">
+        <div class="layer-left">
+          <div class="lnum" style="color:var(--purple)">01</div>
+          <div class="lname">予測エンジン</div>
+        </div>
+        <div class="layer-right">
+          <div class="lr-title">XGBoost 順位予測</div>
+          <p>走行データ（FastF1）＋レギュレーションスコア（アイデア2）を受け取りレース毎の順位を出力。MVPはこのレイヤーだけで動かせる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ 特徴量 -->
+  <section>
+    <h2>使用する特徴量</h2>
+    <table class="feat-table">
+      <thead>
+        <tr>
+          <th>カテゴリ</th>
+          <th>特徴量</th>
+          <th>ソース</th>
+          <th>適用アイデア</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cat">走行データ</td><td>予選順位・ラップタイム</td><td>FastF1 / OpenF1</td><td>1</td></tr>
+        <tr><td class="cat">走行データ</td><td>タイヤ戦略・ピット回数</td><td>FastF1</td><td>1</td></tr>
+        <tr><td class="cat">環境</td><td>気温・雨の有無</td><td>FastF1 / 気象API</td><td>1</td></tr>
+        <tr><td class="cat">サーキット</td><td>特性（高速/市街地/テクニカル）</td><td>手動定義 or LLM</td><td>1</td></tr>
+        <tr><td class="cat">サーキット</td><td>オーバーテイク難易度</td><td>過去統計</td><td>1</td></tr>
+        <tr><td class="cat">レギュレーション</td><td>規定タイプ分類（空力/PU/重量）</td><td>LightRAG + LLM</td><td>2</td></tr>
+        <tr><td class="cat">レギュレーション</td><td>チームDNA × 規定相性スコア</td><td>LightRAG + 過去成績</td><td>2</td></tr>
+        <tr><td class="cat">チーム</td><td>規定適応速度（開幕数戦変化率）</td><td>FastF1 集計</td><td>2</td></tr>
+        <tr><td class="cat">チーム</td><td>開発速度（シーズン中タイム改善率）</td><td>FastF1 集計</td><td>2</td></tr>
+        <tr><td class="cat">シーズン</td><td>現在ポイント差・残りレース数</td><td>OpenF1</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ⑤ 強み比較 -->
+  <section>
+    <h2>各アイデアの強み比較</h2>
+    <div class="bar-section">
+      <div class="bar-card">
+        <div class="bar-card-title c1t">アイデア 1 — MLベース</div>
+        <div class="bar-row"><span class="bar-key">実装容易さ</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--purple)"></div></div><span class="bar-val">4.5</span></div>
+        <div class="bar-row"><span class="bar-key">通常年精度</span><div class="bar-track"><div class="bar-fill" style="width:74%;background:var(--purple)"></div></div><span class="bar-val">3.7</span></div>
+        <div class="bar-row"><span class="bar-key">変更年精度</span><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--purple)"></div></div><span class="bar-val">1.8</span></div>
+        <div class="bar-row"><span class="bar-key">説明可能性</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:var(--purple)"></div></div><span class="bar-val">3.5</span></div>
+        <div class="bar-row"><span class="bar-key">新規性</span><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--purple)"></div></div><span class="bar-val">2.0</span></div>
+      </div>
+      <div class="bar-card">
+        <div class="bar-card-title c2t">アイデア 2 — RAG統合</div>
+        <div class="bar-row"><span class="bar-key">実装容易さ</span><div class="bar-track"><div class="bar-fill" style="width:50%;background:var(--teal)"></div></div><span class="bar-val">2.5</span></div>
+        <div class="bar-row"><span class="bar-key">通常年精度</span><div class="bar-track"><div class="bar-fill" style="width:76%;background:var(--teal)"></div></div><span class="bar-val">3.8</span></div>
+        <div class="bar-row"><span class="bar-key">変更年精度</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--teal)"></div></div><span class="bar-val">4.5</span></div>
+        <div class="bar-row"><span class="bar-key">説明可能性</span><div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--teal)"></div></div><span class="bar-val">4.1</span></div>
+        <div class="bar-row"><span class="bar-key">新規性</span><div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--teal)"></div></div><span class="bar-val">4.6</span></div>
+      </div>
+      <div class="bar-card">
+        <div class="bar-card-title c3t">アイデア 3 — ベイズ+MC</div>
+        <div class="bar-row"><span class="bar-key">実装容易さ</span><div class="bar-track"><div class="bar-fill" style="width:46%;background:var(--amber)"></div></div><span class="bar-val">2.3</span></div>
+        <div class="bar-row"><span class="bar-key">通常年精度</span><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--amber)"></div></div><span class="bar-val">4.0</span></div>
+        <div class="bar-row"><span class="bar-key">変更年精度</span><div class="bar-track"><div class="bar-fill" style="width:68%;background:var(--amber)"></div></div><span class="bar-val">3.4</span></div>
+        <div class="bar-row"><span class="bar-key">説明可能性</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--amber)"></div></div><span class="bar-val">4.4</span></div>
+        <div class="bar-row"><span class="bar-key">新規性</span><div class="bar-track"><div class="bar-fill" style="width:74%;background:var(--amber)"></div></div><span class="bar-val">3.7</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ 精度シナリオ -->
+  <section>
+    <h2>精度への影響：シナリオ別</h2>
+    <div class="insight-grid">
+      <div class="insight-block">
+        <div class="scenario">通常年（過去データあり）</div>
+        <p>アイデア1単独でも十分機能する。予選順位の相関が高くXGBoostは安定して上位を当てられる。アイデア3を加えるとシーズン後半の誤差補正が効く。</p>
+      </div>
+      <div class="insight-block">
+        <div class="scenario">レギュレーション変更年（2026年）</div>
+        <p>アイデア1は過去データが別規定のものになり精度が大幅低下。アイデア2の規定タイプ分類×チームDNAスコアが開幕序盤の空白を補完する。最も効くユースケース。</p>
+      </div>
+      <div class="insight-block">
+        <div class="scenario">シーズン中盤〜終盤</div>
+        <p>アイデア3が最も輝く局面。実績が積まれるほどベイズ更新の精度が上がり「残り5戦で逆転できる確率は何%か」という出力が意味を持ち始める。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ 規定変更年の考察 -->
+  <section>
+    <h2>規定変更年でも予測できる理由</h2>
+    <p>「規定変更年は予測不能」は正確ではなく、<strong style="color:var(--white);font-weight:500;">「今まで使っていた特徴量が効かなくなるだけで、別の特徴量に切り替えれば予測できる」</strong>が正しい。</p>
+
+    <pre><code><span class="comment"># 規定タイプ別スコアリングの実装イメージ</span>
+regulation_type = <span class="str">"ground_effect_aero"</span>  <span class="comment"># LLMで分類</span>
+
+<span class="comment"># 過去の同タイプ規定年でのチーム平均順位</span>
+historical_score = {
+    <span class="str">"Red Bull"</span>:  <span class="fn">avg_position_under</span>(regulation_type),
+    <span class="str">"Mercedes"</span>:  <span class="fn">avg_position_under</span>(regulation_type),
+    <span class="str">"Ferrari"</span>:   <span class="fn">avg_position_under</span>(regulation_type),
+}
+
+<span class="comment"># このスコアをXGBoostの特徴量として注入</span>
+<span class="key">features</span>[<span class="str">"regulation_dna_score"</span>] = historical_score[team]</code></pre>
+
+    <table class="feat-table" style="margin-top:0">
+      <thead>
+        <tr><th>規定変更の状況</th><th>予測精度への影響</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>規定変更 × チームDNAと相性がいい</td><td>予測可能（例：2022年のRed Bull）</td></tr>
+        <tr><td>規定変更 × 完全に新技術（前例なし）</td><td>不確実性は高いが適応速度指標で補える</td></tr>
+        <tr><td>当日環境（雨・気温）</td><td>チーム別の過去環境データで対応可能</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ⑧ Alex Banksとの比較 -->
+  <section>
+    <h2>先行事例との差別化（Alex Banks）</h2>
+    <div class="compare-grid">
+      <div class="compare-col them">
+        <div class="col-title">Alex Banks — MiniMax Agent</div>
+        <div class="cmp-row"><span class="ck">アプローチ</span><span class="cv">汎用AIエージェントに丸投げ</span></div>
+        <div class="cmp-row"><span class="ck">データ</span><span class="cv">エージェントが自律収集（Web検索）</span></div>
+        <div class="cmp-row"><span class="ck">規制活用</span><span class="cv">おそらくなし or LLM知識のみ</span></div>
+        <div class="cmp-row"><span class="ck">モデル更新</span><span class="cv">不明（都度プロンプト）</span></div>
+        <div class="cmp-row"><span class="ck">説明性</span><span class="cv">低い（ブラックボックス）</span></div>
+        <div class="cmp-row"><span class="ck">強み</span><span class="cv">速さ・実装の手軽さ</span></div>
+      </div>
+      <div class="compare-col us">
+        <div class="col-title">本プロジェクト</div>
+        <div class="cmp-row"><span class="ck">アプローチ</span><span class="cv diff">ML + RAG + ベイズの自前パイプライン</span></div>
+        <div class="cmp-row"><span class="ck">データ</span><span class="cv diff">FastF1 / OpenF1（構造化データ）</span></div>
+        <div class="cmp-row"><span class="ck">規制活用</span><span class="cv diff">LightRAGでPDF解析 → 有利度スコア化</span></div>
+        <div class="cmp-row"><span class="ck">モデル更新</span><span class="cv diff">オンライン学習 / ベイズ更新</span></div>
+        <div class="cmp-row"><span class="ck">説明性</span><span class="cv diff">高い（特徴量が明示的）</span></div>
+        <div class="cmp-row"><span class="ck">強み</span><span class="cv diff">規制変更年 × チームDNAの新規性</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑨ 開発ロードマップ -->
+  <section>
+    <h2>開発ロードマップ</h2>
+    <div class="roadmap">
+      <div class="roadmap-phase">
+        <div class="phase-label">Phase 1 — MVP</div>
+        <div class="phase-title">アイデア1を動かす</div>
+        <ul class="phase-items">
+          <li>FastF1でデータ取得</li>
+          <li>予選順位ベースの特徴量設計</li>
+          <li>XGBoostモデル実装</li>
+          <li>Streamlitで順位表示</li>
+        </ul>
+      </div>
+      <div class="roadmap-phase">
+        <div class="phase-label">Phase 2 — 精度向上</div>
+        <div class="phase-title">アイデア2を統合</div>
+        <ul class="phase-items">
+          <li>LightRAGでPDF解析</li>
+          <li>規定タイプ分類ロジック</li>
+          <li>チームDNAスコア計算</li>
+          <li>特徴量に追加して検証</li>
+        </ul>
+      </div>
+      <div class="roadmap-phase">
+        <div class="phase-label">Phase 3 — シーズン予測</div>
+        <div class="phase-title">アイデア3を乗せる</div>
+        <ul class="phase-items">
+          <li>ベイズ更新パイプライン</li>
+          <li>モンテカルロシミュレーション</li>
+          <li>チャンピオン確率の可視化</li>
+          <li>Next.jsでUI強化</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>F1 Prediction App — Idea Handover <span>/ 2026.05.27</span></div>
+  <div>Ideas: 3 &nbsp;|&nbsp; Status: Ready for Phase 1</div>
+</footer>
+
+</body>
+</html>
