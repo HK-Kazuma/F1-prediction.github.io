@@ -393,6 +393,147 @@
   .phase-items li::before { content: '—'; color: var(--gray-700); flex-shrink: 0; }
   .phase-items li:last-child { border-bottom: none; }
 
+  /* PRINCIPLE CARDS */
+  .principle-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .principle-card {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 10px;
+    padding: 22px 24px;
+  }
+  .principle-card .pc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .principle-card .pc-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .principle-card p { font-size: 13px; color: var(--gray-400); margin-bottom: 0; }
+
+  /* DATA SPLIT */
+  .split-bar { display: grid; grid-template-columns: 6fr 2fr 1.5fr; gap: 0; border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+  .split-seg { padding: 14px 18px; }
+  .split-seg.s1 { background: rgba(29,158,117,.15); border: 1px solid rgba(29,158,117,.3); border-right: none; border-radius: 8px 0 0 8px; }
+  .split-seg.s2 { background: rgba(127,119,221,.15); border: 1px solid rgba(127,119,221,.3); border-right: none; }
+  .split-seg.s3 { background: rgba(239,159,39,.15); border: 1px solid rgba(239,159,39,.3); border-radius: 0 8px 8px 0; }
+  .split-seg .ss-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .s1 .ss-label { color: var(--teal); }
+  .s2 .ss-label { color: var(--purple); }
+  .s3 .ss-label { color: var(--amber); }
+  .split-seg .ss-period { font-size: 13px; color: var(--white); font-weight: 500; }
+  .split-seg .ss-desc { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+
+  .rule-box {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-left: 3px solid var(--red);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-bottom: 16px;
+  }
+  .rule-box strong { color: var(--white); font-weight: 500; }
+
+  /* LLM ROLE */
+  .llm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--gray-700); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+  .llm-col { padding: 22px 24px; }
+  .llm-col:first-child { border-right: 1px solid var(--gray-700); }
+  .llm-col .lc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-700);
+  }
+  .llm-col.ok .lc-title { color: var(--teal); }
+  .llm-col.ng .lc-title { color: var(--red); }
+  .llm-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; font-size: 13px; color: var(--gray-200); }
+  .llm-item::before { flex-shrink: 0; margin-top: 1px; }
+  .llm-col.ok .llm-item::before { content: '✓'; color: var(--teal); }
+  .llm-col.ng .llm-item::before { content: '✕'; color: var(--red); }
+  .llm-item .li-sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+  /* PHASE GOALS */
+  .goals-stack { display: flex; flex-direction: column; gap: 16px; }
+  .goal-block {
+    background: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .goal-header {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    border-bottom: 1px solid var(--gray-700);
+  }
+  .goal-phase-id {
+    padding: 14px 20px;
+    border-right: 1px solid var(--gray-700);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .goal-phase-id .gp-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    line-height: 1;
+  }
+  .goal-phase-id .gp-name { font-size: 11px; color: var(--gray-400); margin-top: 4px; font-weight: 500; }
+  .g1 .gp-num { color: var(--purple); }
+  .g2 .gp-num { color: var(--teal); }
+  .g3 .gp-num { color: var(--amber); }
+  .goal-summary { padding: 14px 20px; display: flex; align-items: center; }
+  .goal-summary p { font-size: 13px; color: var(--gray-400); margin: 0; }
+  .goal-body { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .goal-col { padding: 18px 20px; border-right: 1px solid var(--gray-700); }
+  .goal-col:last-child { border-right: none; }
+  .goal-col .gc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 10px;
+  }
+  .goal-col ul { list-style: none; }
+  .goal-col ul li {
+    font-size: 12px;
+    color: var(--gray-200);
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    display: flex;
+    gap: 8px;
+  }
+  .goal-col ul li:last-child { border-bottom: none; }
+  .goal-col ul li::before { content: '—'; color: var(--gray-700); flex-shrink: 0; }
+  .metric-pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .g1 .metric-pill { background: rgba(127,119,221,.15); color: var(--purple); }
+  .g2 .metric-pill { background: rgba(29,158,117,.15); color: var(--teal); }
+  .g3 .metric-pill { background: rgba(239,159,39,.15); color: var(--amber); }
+
   /* DIVIDER */
   .divider { border: none; border-top: 1px solid var(--gray-800); margin: 48px 0 0; }
 
@@ -419,6 +560,18 @@
     .layer-left { border-right: none; border-bottom: 1px solid var(--gray-700); }
     header { grid-template-columns: 1fr; }
     .header-meta { text-align: left; }
+    .principle-grid { grid-template-columns: 1fr; }
+    .split-bar { grid-template-columns: 1fr; }
+    .split-seg.s1 { border-radius: 8px 8px 0 0; border-right: 1px solid rgba(29,158,117,.3); border-bottom: none; }
+    .split-seg.s2 { border-bottom: none; border-right: 1px solid rgba(127,119,221,.3); }
+    .split-seg.s3 { border-radius: 0 0 8px 8px; }
+    .llm-grid { grid-template-columns: 1fr; }
+    .llm-col:first-child { border-right: none; border-bottom: 1px solid var(--gray-700); }
+    .goal-header { grid-template-columns: 1fr; }
+    .goal-phase-id { border-right: none; border-bottom: 1px solid var(--gray-700); }
+    .goal-body { grid-template-columns: 1fr; }
+    .goal-col { border-right: none; border-bottom: 1px solid var(--gray-700); }
+    .goal-col:last-child { border-bottom: none; }
   }
 </style>
 </head>
@@ -431,8 +584,9 @@
   </div>
   <div class="header-meta">
     作成日<br>2026.05.27<br><br>
-    ステータス<br>アイデア整理完了<br><br>
-    次フェーズ<br>MVP実装
+    更新日<br>2026.05.30<br><br>
+    ステータス<br>設計確定<br><br>
+    次フェーズ<br>Phase 1 実装
   </div>
 </header>
 
@@ -673,38 +827,257 @@ historical_score = {
     </div>
   </section>
 
-  <!-- ⑨ 開発ロードマップ -->
+  <!-- ⑨ 開発方針 -->
+  <section>
+    <h2>開発方針</h2>
+    <div class="principle-grid">
+      <div class="principle-card">
+        <div class="pc-label">目的</div>
+        <div class="pc-title">データ分析 × ML を学びながら作る</div>
+        <p>コードには「なぜこう書くか」の解説コメントを付与し、可読性を優先する。精度の数字より「なぜその精度なのか説明できる状態」にすることを重視する。</p>
+      </div>
+      <div class="principle-card">
+        <div class="pc-label">精度イメージ</div>
+        <div class="pc-title">MLB勝率グラフのように動的に収束</div>
+        <p>シーズン序盤は幅広、終盤になるほど確率が収束し、チャンピオンと上位5位が高精度で絞り込まれる。リアルタイムデータが蓄積されるほど予測が鋭くなる。</p>
+      </div>
+      <div class="principle-card">
+        <div class="pc-label">特徴量の大原則</div>
+        <div class="pc-title">「レース当日に知れる情報」のみ使う</div>
+        <p>過去の優勝回数など過去バイアスになる統計はXGBoostの特徴量に直接入れない。チームの強さはPhase 2のDNAスコアとして定性的に組み込む役割分担にする。</p>
+      </div>
+      <div class="principle-card">
+        <div class="pc-label">開発スタイル</div>
+        <div class="pc-title">最小構成からスタート、段階的に拡張</div>
+        <p>特徴量はPhase 1の最小セットから始め、追加するたびに精度への影響をアブレーション分析で確認する。「効いた・効かなかった」をデータで判断する。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑩ データ分割戦略 -->
+  <section>
+    <h2>データ分割戦略</h2>
+    <p style="margin-bottom:20px;">時系列の向きを守った分割により未来データのリークを防ぐ。「1歩前で検証してから本番へ」という原則。</p>
+    <div class="split-bar">
+      <div class="split-seg s1">
+        <div class="ss-label">学習データ</div>
+        <div class="ss-period">〜2024年</div>
+        <div class="ss-desc">約140〜170レース / k-fold交差検証で繰り返し訓練</div>
+      </div>
+      <div class="split-seg s2">
+        <div class="ss-label">テストデータ</div>
+        <div class="ss-period">2025年</div>
+        <div class="ss-desc">24レース / 最後に1回だけ汎化確認</div>
+      </div>
+      <div class="split-seg s3">
+        <div class="ss-label">本番</div>
+        <div class="ss-period">2026年〜</div>
+        <div class="ss-desc">逐次追加・リアルタイム予測</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <strong>重要ルール：</strong>2025年テストデータには原則として最後に1回しか触らない。「2025年の精度が悪かったから修正する」を繰り返すと、気づかないうちに2025年専用モデルが完成してしまう。学習データ内の交差検証でモデルを育てること。
+    </div>
+    <div class="rule-box">
+      <strong>2022年断絶点：</strong>グラウンドエフェクト規制変更により、2021年以前と2022年以降は車体の物理特性が根本的に異なる。2019年以前のデータはXGBoostの <code style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--amber)">sample_weight</code> で重みを下げ、2022〜2024年をメインの学習データとして扱う。
+    </div>
+  </section>
+
+  <!-- ⑪ LLMの役割設計 -->
+  <section>
+    <h2>LLMの役割設計</h2>
+    <p style="margin-bottom:20px;">LLMは「予測者」ではなく<strong style="color:var(--white);font-weight:500;">「翻訳者」</strong>として使う。定性情報を定量スコアに変換し、XGBoostへの特徴量として注入するのが役割。</p>
+    <div class="llm-grid">
+      <div class="llm-col ok">
+        <div class="lc-title">LLMに任せていいこと</div>
+        <div class="llm-item"><div><div>規制文書のタイプ分類</div><div class="li-sub">「空力型 / PU型 / 重量型」への分類</div></div></div>
+        <div class="llm-item"><div><div>チームの技術的強みの言語解釈</div><div class="li-sub">過去データと紐付けた相性スコア生成</div></div></div>
+        <div class="llm-item"><div><div>サーキット特性の解釈スコア</div><div class="li-sub">「モナコ＝市街地＝低速」→ 数値化</div></div></div>
+        <div class="llm-item"><div><div>リアルタイムデータの文脈解釈</div><div class="li-sub">タイヤ状態・戦略意図を数値に変換（Phase 3〜）</div></div></div>
+      </div>
+      <div class="llm-col ng">
+        <div class="lc-title">LLMに任せてはいけないこと</div>
+        <div class="llm-item"><div><div>最終的な順位の直接予測</div><div class="li-sub">ハルシネーション・一貫性の欠如リスク</div></div></div>
+        <div class="llm-item"><div><div>数値データの集計・計算</div><div class="li-sub">pandas / numpy で処理するべき領域</div></div></div>
+        <div class="llm-item"><div><div>「絶対こうなる」という断言</div><div class="li-sub">確率的な出力に限定する</div></div></div>
+        <div class="llm-item"><div><div>データなしでの判断</div><div class="li-sub">FastF1の実績数値を渡してから解釈させる</div></div></div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <strong>検証方法：</strong>① JSON形式で0〜1の数値のみ返すよう出力を固定　② LLMスコア vs 実際の成績の相関係数で妥当性確認　③ スコアあり / なしのアブレーション分析で精度への貢献度をデータで示す
+    </div>
+  </section>
+
+  <!-- ⑫ フェーズ別目標 -->
+  <section>
+    <h2>フェーズ別 完成度・精度目標</h2>
+    <div class="goals-stack">
+
+      <div class="goal-block g1">
+        <div class="goal-header">
+          <div class="goal-phase-id">
+            <div class="gp-num">Phase 1</div>
+            <div class="gp-name">データ分析 + XGBoost MVP</div>
+          </div>
+          <div class="goal-summary">
+            <p>走行データだけで予測基盤を整える。予選順位をベースラインとし、XGBoostがそれを上回れれば合格。特徴量はまだ少ないため大まかな傾向予測にとどまる。</p>
+          </div>
+        </div>
+        <div class="goal-body">
+          <div class="goal-col">
+            <div class="gc-label">精度目標</div>
+            <div class="metric-pill">Top-5的中率：40〜50%</div><br>
+            <div class="metric-pill">MAE：4〜6位以内</div>
+            <ul style="margin-top:10px">
+              <li>ベースライン比で改善できること</li>
+              <li>通常年・乾燥路面を前提</li>
+            </ul>
+          </div>
+          <div class="goal-col">
+            <div class="gc-label">機能完成度</div>
+            <ul>
+              <li>FastF1でデータ取得・キャッシュ</li>
+              <li>特徴量テーブルが作れる</li>
+              <li>XGBoostが学習・予測する</li>
+              <li>Streamlitで順位表・重要度グラフ表示</li>
+            </ul>
+          </div>
+          <div class="goal-col">
+            <div class="gc-label">学習目標</div>
+            <ul>
+              <li>pandasの基本操作</li>
+              <li>特徴量エンジニアリングの考え方</li>
+              <li>XGBoostの学習・推論の流れ</li>
+              <li>過学習の検出と対策</li>
+              <li>MAE / Top-N 評価指標の理解</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="goal-block g2">
+        <div class="goal-header">
+          <div class="goal-phase-id">
+            <div class="gp-num">Phase 2</div>
+            <div class="gp-name">レギュレーションスコア統合</div>
+          </div>
+          <div class="goal-summary">
+            <p>LLMで定性情報を数値化し特徴量に追加。<strong style="color:var(--white);font-weight:500;">規制変更年でも開幕2〜3戦で上位3チームの傾向が出ること</strong>がPhase 2の本命ゴール。</p>
+          </div>
+        </div>
+        <div class="goal-body">
+          <div class="goal-col">
+            <div class="gc-label">精度目標</div>
+            <div class="metric-pill">Top-5的中率：55〜65%</div>
+            <ul style="margin-top:10px">
+              <li>Phase 1比で精度改善</li>
+              <li>2026年開幕序盤でも傾向が出る</li>
+              <li>アブレーション分析で貢献度確認</li>
+            </ul>
+          </div>
+          <div class="goal-col">
+            <div class="gc-label">機能完成度</div>
+            <ul>
+              <li>LightRAGでFIA規則PDF解析</li>
+              <li>規制タイプ分類が数値で出力</li>
+              <li>チームDNAスコアが生成される</li>
+              <li>Phase 1特徴量テーブルに追加</li>
+              <li>追加前後で精度比較できる</li>
+            </ul>
+          </div>
+          <div class="goal-col">
+            <div class="gc-label">学習目標</div>
+            <ul>
+              <li>RAGの仕組みと設計</li>
+              <li>LLMへの構造化プロンプト設計</li>
+              <li>定性情報の数値化手法</li>
+              <li>アブレーション分析の考え方</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="goal-block g3">
+        <div class="goal-header">
+          <div class="goal-phase-id">
+            <div class="gp-num">Phase 3</div>
+            <div class="gp-name">ベイズ更新 + モンテカルロ</div>
+          </div>
+          <div class="goal-summary">
+            <p>レースを重ねるほど確率が収束する動的予測を実現。<strong style="color:var(--white);font-weight:500;">残り5戦でチャンピオン的中率70%以上</strong>、MLB勝率グラフのような収束の動きが見えれば完成。</p>
+          </div>
+        </div>
+        <div class="goal-body">
+          <div class="goal-col">
+            <div class="gc-label">精度目標</div>
+            <div class="metric-pill">チャンピオン的中：70%+（終盤）</div><br>
+            <div class="metric-pill">Top-5的中率：65〜75%</div>
+            <ul style="margin-top:10px">
+              <li>序盤は幅広・終盤は収束</li>
+              <li>確率の動的変化が見えること</li>
+            </ul>
+          </div>
+          <div class="goal-col">
+            <div class="gc-label">機能完成度</div>
+            <ul>
+              <li>レース後に自動ベイズ更新</li>
+              <li>モンテカルロ1000回シミュレーション</li>
+              <li>チャンピオン確率グラフ表示</li>
+              <li>シーズン進行で確率が収束する</li>
+            </ul>
+          </div>
+          <div class="goal-col">
+            <div class="gc-label">学習目標</div>
+            <ul>
+              <li>ベイズ更新の理論と実装</li>
+              <li>モンテカルロ法の原理</li>
+              <li>確率分布の可視化</li>
+              <li>不確実性の定量的な扱い方</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ⑭ 開発ロードマップ（実装順序） -->
+
   <section>
     <h2>開発ロードマップ</h2>
     <div class="roadmap">
       <div class="roadmap-phase">
         <div class="phase-label">Phase 1 — MVP</div>
-        <div class="phase-title">アイデア1を動かす</div>
+        <div class="phase-title">データ分析 + XGBoost基盤</div>
         <ul class="phase-items">
-          <li>FastF1でデータ取得</li>
-          <li>予選順位ベースの特徴量設計</li>
+          <li>FastF1でデータ取得・キャッシュ</li>
+          <li>特徴量テーブル設計・構築</li>
+          <li>ベースライン（予選順位）を先に計算</li>
           <li>XGBoostモデル実装</li>
-          <li>Streamlitで順位表示</li>
+          <li>Streamlitで順位表・特徴量重要度表示</li>
+          <li>2025年テストデータで汎化確認</li>
         </ul>
       </div>
       <div class="roadmap-phase">
         <div class="phase-label">Phase 2 — 精度向上</div>
-        <div class="phase-title">アイデア2を統合</div>
+        <div class="phase-title">RAG + レギュレーションスコア統合</div>
         <ul class="phase-items">
-          <li>LightRAGでPDF解析</li>
-          <li>規定タイプ分類ロジック</li>
-          <li>チームDNAスコア計算</li>
-          <li>特徴量に追加して検証</li>
+          <li>参考リポジトリをフォーク・改造</li>
+          <li>LightRAGでFIA規則PDF解析</li>
+          <li>規定タイプ分類・チームDNAスコア生成</li>
+          <li>特徴量追加 + アブレーション分析</li>
+          <li>2026年規制対応スコアの検証</li>
         </ul>
       </div>
       <div class="roadmap-phase">
         <div class="phase-label">Phase 3 — シーズン予測</div>
-        <div class="phase-title">アイデア3を乗せる</div>
+        <div class="phase-title">ベイズ更新 + リアルタイム化</div>
         <ul class="phase-items">
-          <li>ベイズ更新パイプライン</li>
-          <li>モンテカルロシミュレーション</li>
-          <li>チャンピオン確率の可視化</li>
-          <li>Next.jsでUI強化</li>
+          <li>ベイズ更新パイプライン実装</li>
+          <li>モンテカルロ1000回シミュレーション</li>
+          <li>チャンピオン確率の動的可視化</li>
+          <li>OpenF1リアルタイムデータ連携強化</li>
+          <li>Next.jsでUI強化（任意）</li>
         </ul>
       </div>
     </div>
@@ -713,8 +1086,8 @@ historical_score = {
 </main>
 
 <footer>
-  <div>F1 Prediction App — Idea Handover <span>/ 2026.05.27</span></div>
-  <div>Ideas: 3 &nbsp;|&nbsp; Status: Ready for Phase 1</div>
+  <div>F1 Prediction App — 開発仕様書 <span>/ 2026.05.30</span></div>
+  <div>Phases: 3 &nbsp;|&nbsp; Status: Phase 1 Implementation Ready</div>
 </footer>
 
 </body>
